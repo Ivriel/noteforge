@@ -58,7 +58,7 @@ export function SignUpForm({
         values.name,
       );
       if (response.success) {
-        toast.success("Sign up successful");
+        toast.success("Please check your email for verification");
       } else {
         toast.error(response.message);
       }

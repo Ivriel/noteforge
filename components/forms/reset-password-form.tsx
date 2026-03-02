@@ -26,36 +26,48 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 const formSchema = z.object({
-  email: z.email(),
   password: z.string().min(8),
+  confirmPassword: z.string().min(8),
 });
 
-export function LoginForm({
+export function ResetPasswordForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter();
+  const searchParams = useSearchParams(); // buat dapetin token dari url
+  const token = searchParams.get("token");
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
-      const response = await signInUser(values.email, values.password);
-      if (response.success) {
-        toast.success("Login successful");
-        router.push("/dashboard");
+
+      if (values.password !== values.confirmPassword) {
+        toast.error("Passwords do not match");
+        return;
+      }
+
+      const { error } = await authClient.resetPassword({
+        newPassword: values.password,
+        token: token ?? "",
+      });
+      if (!error) {
+        toast.success("Password reset successfully");
+        router.push("/login");
       } else {
-        toast.error(response.message);
+        toast.error(error.message);
       }
     } catch (error) {
       console.log(error);
@@ -67,9 +79,9 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>Reset your password</CardTitle>
           <CardDescription>
-            Enter your email and password below to login to your account
+            Enter your new password below to reset your password
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -79,32 +91,11 @@ export function LoginForm({
                 <Field>
                   <FormField
                     control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Input your email" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </Field>
-                <Field>
-                  <FormField
-                    control={form.control}
                     name="password"
                     render={({ field }) => (
                       <FormItem>
                         <div className="flex items-center">
                           <FormLabel>Password</FormLabel>
-                          <Link
-                            href="/forgot-password"
-                            className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                          >
-                            Forgot your password?
-                          </Link>
                         </div>
                         <FormControl>
                           <Input
@@ -119,19 +110,36 @@ export function LoginForm({
                   />
                 </Field>
                 <Field>
+                  <FormField
+                    control={form.control}
+                    name="confirmPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex items-center">
+                          <FormLabel>Confirm Password</FormLabel>
+                        </div>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="Type your password once again"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </Field>
+                <Field>
                   <Button disabled={isLoading} type="submit">
                     {isLoading ? (
                       <Loader2 className="size-4 animate-spin" />
                     ) : (
-                      "Login"
+                      "Reset Password"
                     )}
                   </Button>
-                  <Button variant="outline" type="button">
-                    Login with Google
-                  </Button>
                   <FieldDescription className="text-center">
-                    Don&apos;t have an account?{" "}
-                    <Link href="/signup">Sign up</Link>
+                    Already have an account? <Link href="/login">Login</Link>
                   </FieldDescription>
                 </Field>
               </FieldGroup>
