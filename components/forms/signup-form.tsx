@@ -26,6 +26,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
 const formSchema = z.object({
   email: z.email(),
@@ -68,6 +69,14 @@ export function SignUpForm({
       setIsLoading(false);
     }
   }
+
+  const signUp = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/dashboard"
+    });
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -157,7 +166,7 @@ export function SignUpForm({
                       "Sign Up"
                     )}
                   </Button>
-                  <Button variant="outline" type="button">
+                  <Button variant="outline" type="button" onClick={signUp}>
                     Sign Up with Google
                   </Button>
                   <FieldDescription className="text-center">
