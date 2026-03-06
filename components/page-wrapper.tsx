@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import {
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
-    BreadcrumbList
+    BreadcrumbList,
+    BreadcrumbSeparator
 } from "@/components/ui/breadcrumb"
 import { SidebarTrigger } from "./ui/sidebar";
 import { Logout } from "./logout";
@@ -27,12 +28,35 @@ export function PageWrapper({ children, breadcrumbs }: PageWrapperProps) {
                         <SidebarTrigger />
                         <Breadcrumb>
                             <BreadcrumbList>
-                                {breadcrumbs.map((breadcrumb) => (
-                                    <BreadcrumbItem key={breadcrumb.label}>
-                                        <BreadcrumbLink href={breadcrumb.href}>
-                                            {breadcrumb.label}</BreadcrumbLink>
-                                    </BreadcrumbItem>
-                                ))}
+
+                                {breadcrumbs.map((breadcrumb, index) => {
+                                    // Mengecek apakah item saat ini adalah urutan terakhir dalam array breadcrumbs
+                                    const isLast = index === breadcrumbs.length - 1;
+
+                                    return (
+                                        <Fragment key={breadcrumb.label}>
+                                            <BreadcrumbItem>
+                                                {isLast ? (
+                                                    // Jika di halaman terakhir: teks ditebalkan dan tidak bisa diklik (UX aktif)
+                                                    <span className="font-bold text-foreground">
+                                                        {breadcrumb.label}
+                                                    </span>
+                                                ) : (
+                                                    // Jika bukan terakhir: tetap tampilkan link untuk navigasi balik
+                                                    <BreadcrumbLink href={breadcrumb.href}>
+                                                        {breadcrumb.label}
+                                                    </BreadcrumbLink>
+                                                )}
+                                            </BreadcrumbItem>
+
+                                            {/* Baris ini memastikan separator (pemisah) hanya muncul di ANTARA item.
+          Jika item adalah yang terakhir, separator tidak akan dirender.
+      */}
+                                            {!isLast && <BreadcrumbSeparator />}
+                                        </Fragment>
+                                    );
+                                })}
+
 
                             </BreadcrumbList>
                         </Breadcrumb>

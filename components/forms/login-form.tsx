@@ -39,7 +39,8 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingEmail, setIsLoadingEmail] = useState(false);
+  const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,15 +50,22 @@ export function LoginForm({
   });
 
   const signIn = async () => {
-    await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/dashboard"
-    });
+    try {
+      setIsLoadingGoogle(true)
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/dashboard"
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoadingGoogle(false);
+    }
   };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      setIsLoading(true);
+      setIsLoadingEmail(true);
       const response = await signInUser(values.email, values.password);
       if (response.success) {
         toast.success("Login successful");
@@ -68,7 +76,7 @@ export function LoginForm({
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setIsLoadingEmail(false);
     }
   }
   return (
@@ -127,15 +135,19 @@ export function LoginForm({
                   />
                 </Field>
                 <Field>
-                  <Button disabled={isLoading} type="submit">
-                    {isLoading ? (
+                  <Button disabled={isLoadingEmail} type="submit">
+                    {isLoadingEmail ? (
                       <Loader2 className="size-4 animate-spin" />
                     ) : (
                       "Login"
                     )}
                   </Button>
-                  <Button variant="outline" type="button" onClick={signIn}>
-                    Login with Google
+                  <Button disabled={isLoadingGoogle} variant="outline" type="button" onClick={signIn}>
+                    {isLoadingGoogle ? (
+                      <Loader2 className="size-4 animate-spin" />
+                    ) : (
+                      "Login with Google"
+                    )}
                   </Button>
                   <FieldDescription className="text-center">
                     Don&apos;t have an account?{" "}
