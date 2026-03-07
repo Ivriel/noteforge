@@ -33,11 +33,11 @@ export default function RichTextEditor({ content, noteId }: RichTextEditorProps)
   })
 
   return (
-    <>
+    <div className={styles.editorContainer}>
       <MenuBar editor={editor} />
       <div className={styles.editorWrapper}>
         <EditorContent editor={editor} className={styles.tiptap} />
       </div>
-    </>
+    </div>
   )
 }

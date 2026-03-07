@@ -54,109 +54,179 @@
 
   /* Code and preformatted text styles */
   code {
-    background-color: var(--purple-light);
-    border-radius: 0.4rem;
-    color: var(--black);
-    font-size: 0.85rem;
-    padding: 0.25em 0.3em;
+    background-color: #f4f4f5;
+    border-radius: 0.25rem;
+    color: #be185d;
+    font-size: 0.875rem;
+    padding: 0.125rem 0.375rem;
+    font-family: 'Consolas', 'Monaco', monospace;
   }
 
   pre {
-    background: var(--black);
-    border-radius: 0.5rem;
-    color: var(--white);
-    font-family: 'JetBrainsMono', monospace;
-    margin: 1.5rem 0;
-    padding: 0.75rem 1rem;
+    background: #f4f4f5;
+    border-radius: 0.375rem;
+    color: #18181b;
+    font-family: 'Consolas', 'Monaco', monospace;
+    margin: 1rem 0;
+    padding: 0.875rem 1rem;
+    overflow-x: auto;
 
     code {
       background: none;
       color: inherit;
-      font-size: 0.8rem;
+      font-size: 0.875rem;
       padding: 0;
     }
   }
 
   blockquote {
-    border-left: 3px solid var(--gray-3);
-    margin: 1.5rem 0;
+    border-left: 2px solid #d4d4d8;
+    margin: 1rem 0;
     padding-left: 1rem;
+    color: #71717a;
   }
 
   hr {
     border: none;
-    border-top: 1px solid var(--gray-2);
-    margin: 2rem 0;
+    border-top: 1px solid #e4e4e7;
+    margin: 1.5rem 0;
   }
+}
+
+:global(.dark) .tiptap code {
+  background-color: #27272a;
+  color: #f472b6;
+}
+
+:global(.dark) .tiptap pre {
+  background: #18181b;
+  color: #d4d4d8;
+}
+
+:global(.dark) .tiptap blockquote {
+  border-left-color: #3f3f46;
+  color: #a1a1aa;
+}
+
+:global(.dark) .tiptap hr {
+  border-top-color: #27272a;
+}
+
+/* Editor container - wraps toolbar and editor */
+.editorContainer {
+  border: 1px solid #18181b;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+:global(.dark) .editorContainer {
+  border-color: #3f3f46;
 }
 
 /* Menu bar styles */
 .controlGroup {
   display: flex;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+:global(.dark) .controlGroup {
+  background-color: #18181b;
+  border-bottom-color: #27272a;
 }
 
 .buttonGroup {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem;
+  gap: 0.125rem;
+  align-items: center;
 }
 
 .buttonGroup button {
-  background-color: #0d0d0d;
-  border: 1px solid #27272a;
-  border-radius: 0.4rem;
-  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  border-radius: 0.25rem;
+  color: #71717a;
   cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 500;
-  padding: 0.375rem 0.75rem;
-  transition: all 0.2s;
+  padding: 0.375rem;
+  transition: all 0.15s ease;
+  min-width: 1.75rem;
+  min-height: 1.75rem;
+}
+
+:global(.dark) .buttonGroup button {
+  color: #a1a1aa;
 }
 
 .buttonGroup button:hover {
+  background-color: #e4e4e7;
+  color: #18181b;
+}
+
+:global(.dark) .buttonGroup button:hover {
   background-color: #27272a;
+  color: #ffffff;
 }
 
 .buttonGroup button.isActive {
-  background-color: #7c3aed;
-  border-color: #7c3aed;
-  color: #fff;
+  background-color: #e4e4e7;
+  color: #18181b;
+}
+
+:global(.dark) .buttonGroup button.isActive {
+  background-color: #27272a;
+  color: #ffffff;
 }
 
 .buttonGroup button:disabled {
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.separator {
+  width: 1px;
+  height: 1rem;
+  background-color: #d4d4d8;
+  margin: 0 0.5rem;
+}
+
+:global(.dark) .separator {
+  background-color: #3f3f46;
 }
 
 /* Editor content styles */
 .editorWrapper {
-  background-color: #fff;
-  border: 1px solid #e5e5e5;
-  border-radius: 0.5rem;
-  color: #0d0d0d;
-  margin-top: 0.75rem;
-  padding: 1.25rem;
+  background-color: #ffffff;
+  color: #18181b;
+  padding: 1.25rem 1.5rem;
+  min-height: 400px;
 }
 
-@media (prefers-color-scheme: dark) {
-  .editorWrapper {
-    background-color: #0d0d0d;
-    border: 1px solid #fff;
-    color: #fff;
-  }
+:global(.dark) .editorWrapper {
+  background-color: #09090b;
+  color: #fafafa;
 }
 
 .editorWrapper .tiptap {
   outline: none;
-  min-height: 300px;
+  min-height: 350px;
+  font-size: 0.9375rem;
+  line-height: 1.7;
 }
 
 .editorWrapper .tiptap p.is-editor-empty:first-child::before {
-  color: #adb5bd;
+  color: #a1a1aa;
   content: attr(data-placeholder);
   float: left;
   height: 0;
   pointer-events: none;
+}
+
+:global(.dark) .editorWrapper .tiptap p.is-editor-empty:first-child::before {
+  color: #52525b;
 }
