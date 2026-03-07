@@ -2,10 +2,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Code2,
   PenSquare,
-  Settings2,
   ShieldCheck,
-  Sparkles,
-  Zap,
 } from "lucide-react";
 import { ReactNode } from "react";
 

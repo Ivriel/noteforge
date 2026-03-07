@@ -1,9 +1,7 @@
 import { CreateNoteButton } from "@/components/create-note-button";
 import NoteCard from "@/components/note-card";
 import { PageWrapper } from "@/components/page-wrapper";
-import RichTextEditor from "@/components/rich-text-editor";
 import { getNotebookById } from "@/server/notebooks";
-import { JSONContent } from "@tiptap/core";
 
 type Params = Promise<{ notebookId: string }>
 

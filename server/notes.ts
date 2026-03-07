@@ -2,9 +2,7 @@
 
 import { db } from "@/db/drizzle"
 import { InsertNote, notes } from "@/db/schema"
-import { auth } from "@/lib/auth"
 import { eq } from "drizzle-orm"
-import { headers } from "next/headers"
 
 export const createNote = async (values: InsertNote) => {
     try {
