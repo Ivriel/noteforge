@@ -17,16 +17,9 @@ export default function CallToAction() {
 
           <div className="mt-12 flex flex-wrap justify-center gap-4">
             <Button asChild size="lg" className="px-8">
-              <Link href="/">
+              <Link href="/dashboard">
                 {/* Menambah kesan urgensi dan personal */}
                 <span>Start Building For Free</span>
-              </Link>
-            </Button>
-
-            <Button asChild size="lg" variant="outline" className="px-8">
-              <Link href="/">
-                {/* Mengganti 'Book Demo' menjadi sesuatu yang lebih pas untuk personal notes */}
-                <span>See How It Works</span>
               </Link>
             </Button>
           </div>

@@ -1,29 +1,15 @@
 import * as React from "react"
-import { ChevronRight, File } from "lucide-react"
 
 import { SearchForm } from "@/components/search-form"
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
-import {
   Sidebar,
   SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { getNotebooks } from "@/server/notebooks"
 import Image from "next/image"
 import { SidebarData } from "./sidebar-data"
-
-
 
 export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const notebooks = await getNotebooks()
