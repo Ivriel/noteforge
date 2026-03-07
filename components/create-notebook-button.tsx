@@ -61,7 +61,7 @@ export const CreateNotebookButton = () => {
             } else {
                 toast.error(response.message || "Failed to create notebook")
             }
-        } catch (error) {
+        } catch {
             toast.error("Failed to create notebook")
         } finally {
             setIsLoading(false)

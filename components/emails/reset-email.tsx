@@ -16,11 +16,9 @@ import {
 interface PasswordResetEmailProps {
     username: string;
     resetUrl: string;
-    requestTime: string;
 }
 
-const PasswordResetEmail = ({ username, resetUrl, requestTime }: PasswordResetEmailProps) => {
-
+const PasswordResetEmail = ({ username, resetUrl }: PasswordResetEmailProps) => {
 
     return (
         <Html lang="en" dir="ltr">
@@ -57,7 +55,7 @@ const PasswordResetEmail = ({ username, resetUrl, requestTime }: PasswordResetEm
                             </Section>
 
                             <Text className="text-[14px] text-gray-600 mb-[24px] leading-[20px]">
-                                If the button above doesn't work, you can also copy and paste the following link into your browser:
+                                If the button above doesn&apos;t work, you can also copy and paste the following link into your browser:
                             </Text>
 
                             <Text className="text-[14px] text-blue-600 mb-[32px] break-all">
@@ -78,16 +76,16 @@ const PasswordResetEmail = ({ username, resetUrl, requestTime }: PasswordResetEm
                                     • The link can only be used once
                                 </Text>
                                 <Text className="text-[14px] text-yellow-700 leading-[20px]">
-                                    • If you didn't request this reset, please ignore this email
+                                    • If you didn&apos;t request this reset, please ignore this email
                                 </Text>
                             </Section>
 
                             <Text className="text-[14px] text-gray-600 mb-[24px] leading-[20px]">
-                                If you didn't request a password reset, you can safely ignore this email. Your password will remain unchanged, and no further action is required.
+                                If you didn&apos;t request a password reset, you can safely ignore this email. Your password will remain unchanged, and no further action is required.
                             </Text>
 
                             <Text className="text-[14px] text-gray-600 mb-[24px] leading-[20px]">
-                                If you're having trouble with your account or didn't request this reset, please contact our support team immediately.
+                                If you&apos;re having trouble with your account or didn&apos;t request this reset, please contact our support team immediately.
                             </Text>
                         </Section>
 

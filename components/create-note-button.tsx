@@ -61,7 +61,7 @@ export const CreateNoteButton = ({ notebookId }: { notebookId: string }) => {
             } else {
                 toast.error(response.message || "Failed to create note")
             }
-        } catch (error) {
+        } catch {
             toast.error("Failed to create note")
         } finally {
             setIsLoading(false)

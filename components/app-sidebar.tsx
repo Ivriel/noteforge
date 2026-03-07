@@ -10,6 +10,7 @@ import {
 import { getNotebooks } from "@/server/notebooks"
 import Image from "next/image"
 import { SidebarData } from "./sidebar-data"
+import { Note, Notebook } from "@/db/schema"
 
 export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const notebooks = await getNotebooks()
@@ -17,10 +18,10 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
   const data = {
     versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
     navMain: [
-      ...(notebooks?.notebooks?.map((notebook) => ({
+      ...(notebooks?.notebooks?.map((notebook: Notebook & { notes: Note[] }) => ({
         title: notebook.name,
         url: `/dashboard/${notebook.id}`,
-        items: ((notebook as any).notes || []).map((note: any) => ({
+        items: (notebook.notes || []).map((note: Note) => ({
           title: note.title,
           url: `/dashboard/notebook/${notebook.id}/note/${note.id}`,
         })) || []
