@@ -34,7 +34,7 @@ export const auth = betterAuth({
         from: 'NoteForge <onboarding@forenoo.dev>',
         to: [user.email],
         subject: "Reset your password",
-        react: PasswordResetEmail({ username: user.name, resetUrl: url, requestTime: new Date().toLocaleString() }),
+        react: PasswordResetEmail({ username: user.name, resetUrl: url }),
       });
     },
   },
