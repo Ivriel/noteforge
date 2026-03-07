@@ -1,46 +1,61 @@
-import * as React from "react"
+import * as React from "react";
+import { Suspense } from "react";
 
-import { SearchForm } from "@/components/search-form"
+import { SearchForm } from "@/components/search-form";
 import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { getNotebooks } from "@/server/notebooks"
-import Image from "next/image"
-import { SidebarData } from "./sidebar-data"
-import { Note, Notebook } from "@/db/schema"
+} from "@/components/ui/sidebar";
+import { getNotebooks } from "@/server/notebooks";
+import Image from "next/image";
+import { SidebarData } from "./sidebar-data";
+import { Note, Notebook } from "@/db/schema";
 
-export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const notebooks = await getNotebooks()
+export async function AppSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
+  const notebooks = await getNotebooks();
   // This is sample data.
   const data = {
     versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
     navMain: [
-      ...(notebooks?.notebooks?.map((notebook: Notebook & { notes: Note[] }) => ({
-        title: notebook.name,
-        url: `/dashboard/${notebook.id}`,
-        items: (notebook.notes || []).map((note: Note) => ({
-          title: note.title,
-          url: `/dashboard/notebook/${notebook.id}/note/${note.id}`,
-        })) || []
-      })) ?? [])
+      ...(notebooks?.notebooks?.map(
+        (notebook: Notebook & { notes: Note[] }) => ({
+          title: notebook.name,
+          url: `/dashboard/${notebook.id}`,
+          items:
+            (notebook.notes || []).map((note: Note) => ({
+              title: note.title,
+              url: `/dashboard/notebook/${notebook.id}/note/${note.id}`,
+            })) || [],
+        }),
+      ) ?? []),
     ],
-  }
+  };
   return (
     <Sidebar {...props}>
       <SidebarHeader>
         <div className="flex items-center gap-2 my-4">
-          <Image src="/noteforge-logo.png" alt="Noteforge Logo" width={32} height={32} />
+          <Image
+            src="/noteforge-logo.png"
+            alt="Noteforge Logo"
+            width={32}
+            height={32}
+          />
           <span className="text-lg font-bold">Noteforge</span>
         </div>
-        <SearchForm />
+        <Suspense fallback={null}>
+          <SearchForm />
+        </Suspense>
       </SidebarHeader>
       <SidebarContent className="gap-0">
-        <SidebarData data={data} />
+        <Suspense fallback={null}>
+          <SidebarData data={data} />
+        </Suspense>
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }
