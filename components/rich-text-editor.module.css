@@ -140,6 +140,14 @@
   padding: 1.25rem;
 }
 
+@media (prefers-color-scheme: dark) {
+  .editorWrapper {
+    background-color: #0d0d0d;
+    border: 1px solid #fff;
+    color: #fff;
+  }
+}
+
 .editorWrapper .tiptap {
   outline: none;
   min-height: 300px;

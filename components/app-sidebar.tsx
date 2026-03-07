@@ -1,8 +1,7 @@
 import * as React from "react"
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, File } from "lucide-react"
 
 import { SearchForm } from "@/components/search-form"
-import { VersionSwitcher } from "@/components/version-switcher"
 import {
   Collapsible,
   CollapsibleContent,
@@ -21,6 +20,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { getNotebooks } from "@/server/notebooks"
+import Image from "next/image"
 
 
 
@@ -35,7 +35,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
         url: `/dashboard/${notebook.id}`,
         items: ((notebook as any).notes || []).map((note: any) => ({
           title: note.title,
-          url: `/dashboard/note/${note.id}`,
+          url: `/dashboard/notebook/${notebook.id}/note/${note.id}`,
         })) || []
       })) ?? [])
     ],
@@ -43,10 +43,10 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <VersionSwitcher
-          versions={data.versions}
-          defaultVersion={data.versions[0]}
-        />
+        <div className="flex items-center gap-2 my-4">
+          <Image src="/noteforge-logo.png" alt="Noteforge Logo" width={32} height={32} />
+          <span className="text-lg font-bold">Noteforge</span>
+        </div>
         <SearchForm />
       </SidebarHeader>
       <SidebarContent className="gap-0">
@@ -76,7 +76,10 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
                     {item.items.map((subItem: { title: string; url: string }) => (
                       <SidebarMenuItem key={subItem.title}>
                         <SidebarMenuButton asChild>
-                          <a href={subItem.url}>{subItem.title}</a>
+                          <a href={subItem.url}>
+                            <File />
+                            {subItem.title}
+                          </a>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     ))}

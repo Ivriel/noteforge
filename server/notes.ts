@@ -19,7 +19,10 @@ export const createNote = async (values: InsertNote) => {
 export const getNoteById = async (id: string) => {
     try {
         const note = await db.query.notes.findFirst({
-            where: eq(notes.id, id)
+            where: eq(notes.id, id),
+            with: {
+                notebook: true
+            }
         });
         return { success: true, note }
     } catch {
