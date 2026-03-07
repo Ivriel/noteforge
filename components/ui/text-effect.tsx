@@ -181,6 +181,7 @@ const createVariantsWithTransition = (
   if (!transition) return baseVariants;
 
   const { exit: _exit, ...mainTransition } = transition;
+  void _exit;
 
   return {
     ...baseVariants,
